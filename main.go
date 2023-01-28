@@ -10,12 +10,14 @@ import (
 
 func main() {
 	var fileName string
+	var args string
 
 	flag.StringVar(&fileName, "factory", "", "Specify a factory name")
-
+	flag.StringVar(&args, "fields", "", "Specify the fields")
 	flag.Parse()
 
 	fmt.Println(fileName)
+	fmt.Println(args)
 
 	if fileName == "" {
 		fmt.Println("Invalid")
@@ -30,9 +32,15 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+
 		fmt.Printf("read %d bytes: %q\n", count, data[:count])
 		content := strings.ReplaceAll(string(data[:count]), "_{}_", fileName)
+
+		newArgs := strings.ReplaceAll(args, ",", "\n")
+		newArgs = strings.ReplaceAll(newArgs, ":", " ")
+		content = strings.ReplaceAll(content, "_[]_", newArgs)
 		fmt.Println(content)
+
 		path := "./database/factories"
 		filepath := fmt.Sprintf("%s/%s.go", path, fileName)
 

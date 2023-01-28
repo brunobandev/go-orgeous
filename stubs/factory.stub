@@ -8,6 +8,7 @@ func New_{}_Factory() _{}_Factory {
 }
 
 type _{}_ struct {
+    _[]_
 }
 
 func New_{}_() *_{}_ {
@@ -24,4 +25,3 @@ func (f *_{}_Factory) Generate(quantity int) []_{}_ {
 
 	return generated
 }
-
