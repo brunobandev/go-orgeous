@@ -8,7 +8,7 @@ func New_{}_Factory() _{}_Factory {
 }
 
 type _{}_ struct {
-    _[]_
+_[]_
 }
 
 func New_{}_() *_{}_ {
@@ -16,11 +16,11 @@ func New_{}_() *_{}_ {
 	}
 }
 
-func (f *_{}_Factory) Generate(quantity int) []_{}_ {
-	var generated []_{}_
+func (f *_{}_Factory) Generate(quantity int) []*_{}_ {
+	var generated []*_{}_
 
 	for i := 0; i < quantity; i++ {
-		generated = append(generated, *New_{}_())
+		generated = append(generated, New_{}_())
 	}
 
 	return generated
