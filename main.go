@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"text/template"
 
 	seeder "github.com/brunobandev/go-orgeous/database/seeders"
 )
@@ -30,21 +31,16 @@ func main() {
 	if seed != "" {
 		seeder.Execute()
 	}
-	//	seeder.Execute()
-
+	// seeder.Execute()
 }
 
 func CreateFactory(factoryName, args string) {
-	content, err := os.ReadFile("./stubs/factory.stub")
+	tmpl, err := template.ParseFiles("./stubs/factory.stub")
 	if err != nil {
 		panic(err)
 	}
 
-	sContent := string(content)
-	sContent = strings.ReplaceAll(sContent, "_{}_", factoryName)
-
 	fields := FormatFields(args)
-	sContent = strings.ReplaceAll(sContent, "_[]_", fields)
 
 	path := "./database/factories"
 	filepath := fmt.Sprintf("%s/%s.go", path, factoryName)
@@ -54,12 +50,17 @@ func CreateFactory(factoryName, args string) {
 		panic(err)
 	}
 
-	_, err = os.Create(filepath)
+	file, err := os.Create(filepath)
 	if err != nil {
 		panic(err)
 	}
+	defer file.Close()
 
-	err = os.WriteFile(filepath, []byte(sContent), 0644)
+	type TemplateData struct {
+		Name   string
+		Fields string
+	}
+	err = tmpl.Execute(file, TemplateData{Name: factoryName, Fields: fields})
 	if err != nil {
 		panic(err)
 	}
