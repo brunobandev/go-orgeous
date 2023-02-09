@@ -1,26 +1,26 @@
 package factories
 
-type _{}_Factory struct {
+type {{.Name}}Factory struct {
 }
 
-func New_{}_Factory() _{}_Factory {
-	return _{}_Factory{}
+func New{{.Name}}Factory() {{.Name}}Factory {
+	return {{.Name}}Factory{}
 }
 
-type _{}_ struct {
-_[]_
+type {{.Name}} struct {
+{{.Fields}}
 }
 
-func New_{}_() *_{}_ {
-	return &_{}_{
+func New{{.Name}}() *{{.Name}} {
+	return &{{.Name}}{
 	}
 }
 
-func (f *_{}_Factory) Generate(quantity int) []*_{}_ {
-	var generated []*_{}_
+func (f *{{.Name}}Factory) Generate(quantity int) []*{{.Name}} {
+	var generated []*{{.Name}}
 
 	for i := 0; i < quantity; i++ {
-		generated = append(generated, New_{}_())
+	  generated = append(generated, New{{.Name}}())
 	}
 
 	return generated
