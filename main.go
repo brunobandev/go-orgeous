@@ -6,19 +6,14 @@ import (
 	"os"
 	"strings"
 	"text/template"
-
-	seeder "github.com/brunobandev/go-orgeous/database/seeders"
 )
 
 func main() {
 	var factory string
 	var args string
-	var seed string
 
 	flag.StringVar(&factory, "factory", "", "Specify a factory name")
 	flag.StringVar(&args, "fields", "", "Specify the fields")
-
-	flag.StringVar(&seed, "seed", "", "Specify a seed name")
 
 	flag.Parse()
 
@@ -27,11 +22,6 @@ func main() {
 	if factory != "" {
 		CreateFactory(factory, args)
 	}
-
-	if seed != "" {
-		seeder.Execute()
-	}
-	// seeder.Execute()
 }
 
 func CreateFactory(factoryName, args string) {
