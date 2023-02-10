@@ -50,6 +50,7 @@ func CreateFactory(factoryName, args string) {
 		Name   string
 		Fields string
 	}
+
 	err = tmpl.Execute(file, TemplateData{Name: factoryName, Fields: fields})
 	if err != nil {
 		panic(err)
